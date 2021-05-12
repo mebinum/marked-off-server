@@ -1,30 +1,40 @@
-# Hello Node
+# Sample Integration: GitHub Issues to Notion
 
-[Node.js](https://nodejs.org/en/about/) is a popular runtime that lets you run JavaScript on the server instead of in a browser. This project uses the [Fastify](https://www.fastify.io/) framework to explore basic templating with [Handlebars](https://handlebarsjs.com/) and submitting data using forms and querystrings.
+## About the Integration 
 
-## What's in this project?
+This Notion integration syncs GitHub Issues for a specific repo to a Notion Database. This integration was built using this [database template](https://www.notion.so/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd) and [GitHub's Octokit Library](https://github.com/octokit). Changes made to issues in the Notion database will not be reflected in GitHub. For an example which allows you to take actions based on changes in a database [go here.](https://github.com/makenotion/notion-sdk-js/examples/database-update-send-email)
 
-← `README.md`: That’s this file, where you can tell people what your cool website does and how you built it.
+## Running Locally
 
-← `public/style.css`: The styling rules for your pages and posts.
+### 1. Setup your local project
+```zsh
+# Clone this repository locally 
+git clone https://github.com/makenotion/notion-sdk-js.git 
 
-← `server.js`: The main server script for your new site.
+# Switch into this project
+cd notion-sdk-js/examples/github-issue-sync
 
-← `src/`: This folder holds the main template for your site along with some basic data files.
+# Install the dependencies 
+npm install
+```
 
-### Working in the `src/` folder 📁
+### 2. Set your enviornment variables in a `.env` file
+```zsh
+GITHUB_KEY=<your-github-personal-access-token>
+NOTION_KEY=<your-notion-api-key>
+NOTION_DATABASE_ID=<notion-database-id>
+GITHUB_REPO_OWNER=<github-owner-username>
+GITHUB_REPO_NAME=<github-repo-name>
+```
 
-← `src/pages/index.hbs`: This is the main page template for your site.
+You can create your Notion API key [here](www.notion.com/integrations).
 
-← `src/colors.json`: A collection of CSS color names. We use this to pick a random color, and to match searches against color names.
+You can create your GitHub Personal Access token by following the guide [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
 
-← `src/seo.json`: When you're ready to share your new site or add a custom domain, change SEO/meta settings in here.
+To create a Notion database that will work with this example, duplicate [this empty database template](https://www.notion.so/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
 
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
+### 3. Run code 
 
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.
+```zsh
+node index.js
+```
