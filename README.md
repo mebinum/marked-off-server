@@ -8,14 +8,7 @@ This Notion integration syncs GitHub Issues for a specific repo to a Notion Data
 
 ### 1. Setup your local project
 ```zsh
-# Clone this repository locally 
-git clone https://github.com/makenotion/notion-sdk-js.git 
-
-# Switch into this project
-cd notion-sdk-js/examples/github-issue-sync
-
-# Install the dependencies 
-npm install
+Remix this Glitch example project
 ```
 
 ### 2. Set your enviornment variables in a `.env` file
