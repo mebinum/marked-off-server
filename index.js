@@ -1,6 +1,16 @@
-const { Octokit } = require("octokit");
-const dotenv = require("dotenv");
-const { Client } = require("@notionhq/client");
+/* ================================================================================
+
+	notion-github-sync.
+  
+  Glitch example: https://glitch.com/edit/#!/notion-github-sync
+  Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
+
+================================================================================ */
+
+
+import { Octokit } from "octokit"
+import dotenv from "dotenv"
+import { Client } from "@notionhq/client"
 dotenv.config();
 
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY });
