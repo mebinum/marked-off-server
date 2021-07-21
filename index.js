@@ -17,9 +17,20 @@ const notion = new Client({ auth: process.env.NOTION_KEY })
 
 const databaseId = process.env.NOTION_DATABASE_ID
 
-console.log("config complete")
+/**
+ * Local map to store Notion pageId to its GitHub issue ID.
+ * { [pageId: string]: string }
+ */
+const notionPageIdToGitHubIssueIdMap = {}
 
+setInitialNotionPageIdToGitHubIssueMap().then(() => {
+  console.log("done")
+})
 
+// Initialize local data store.
+async function setInitialNotionPageIdToGitHubIssueMap() {
+  const currentIssues = await getIssuesFromNotionDatabase()
+}
 
 // async function syncIssuesWithDatabase() {
 //   console.log("Syncing GitHub Issues with Notion Database")
@@ -88,17 +99,17 @@ console.log("config complete")
 //   syncIssuesWithDatabase()
 // })()
 
-
 /**
-* Gets issues from the database.
-*
-* Returns array of objects with
-*/
+ * Gets issues from the database.
+ *
+ * Returns array of objects with
+ */
 async function getIssuesFromNotionDatabase() {
   const pages = []
   let cursor = undefined
   while (true) {
     console.log("\nFetching issues from Notion DB...")
+    console.log({ databaseId, env: process.env })
     const { results, next_cursor } = await notion.databases.query({
       database_id: databaseId,
       start_cursor: cursor,
@@ -110,23 +121,6 @@ async function getIssuesFromNotionDatabase() {
     cursor = next_cursor
   }
   console.log(`${pages.length} issues successfully fetched.`)
-  return pages.map(page => {
-    const 
-  })
-
-
-    // While there are more pages left in the query, get pages from the database.
-    const current_pages = await notion.request(request_payload)
-
-    for (const page of current_pages.results) {
-      issues[page.properties["Issue Number"].number] = {
-        page_id: page.id,
-      }
-    }
-    if (current_pages.has_more) {
-      await getPageOfIssues(current_pages.next_cursor)
-    }
-  }
-  await getPageOfIssues()
-  return issues
+  // TODO:
+  return pages
 }
