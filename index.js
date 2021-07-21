@@ -42,8 +42,9 @@ async function setInitialGitHubToNotionIdMap() {
 
 async function syncNotionDatabaseWithGitHub() {
   // Get all issues currently in the provided GitHub repository.
+  console.log("\nFetching issues from Notion DB...")
   const issues = await getGitHubIssuesForRepository()
-  console.log(`\nFetched ${issues.length} issues from GitHub repository.`)
+  console.log(`Fetched ${issues.length} issues from GitHub repository.`)
   // Group issues into those that need to be created or updated in the Notion database.
   const { pagesToCreate, pagesToUpdate } = getNotionOperations(issues)
   // Create pages for new issues.
