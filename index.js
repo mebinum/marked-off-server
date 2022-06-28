@@ -82,20 +82,21 @@ async function getIssuesFromNotionDatabase() {
     cursor = next_cursor
   }
   console.log(`${pages.length} issues successfully fetched.`)
-  return await Promise.all(
-    pages.map(async page => {
-      const issueNumberPropertyId = page.properties["Issue Number"].id
-      const propertyResult = await notion.pages.properties.retrieve({
-        page_id: page.id,
-        property_id: issueNumberPropertyId,
-      })
-      console.log("*** propertyResult", propertyResult)
-      return {
-        pageId: page.id,
-        issueNumber: propertyResult.number,
-      }
+  const things = []
+
+  for (const page of pages) {
+    const issueNumberPropertyId = page.properties["Issue Number"].id
+    const propertyResult = await notion.pages.properties.retrieve({
+      page_id: page.id,
+      property_id: issueNumberPropertyId,
     })
-  )
+    console.log("*** propertyResult", propertyResult)
+    things.push({
+      pageId: page.id,
+      issueNumber: propertyResult.number,
+    })
+  }
+  return things
 }
 
 /**
