@@ -1,10 +1,10 @@
 dependencies:
-  '@notionhq/client': 1.0.4
+  '@notionhq/client': 2.0.0
   dotenv: 16.0.1
   lodash: 4.17.21
   octokit: 1.8.1
 packages:
-  /@notionhq/client/1.0.4:
+  /@notionhq/client/2.0.0:
     dependencies:
       '@types/node-fetch': 2.6.2
       node-fetch: 2.6.7
@@ -12,7 +12,7 @@ packages:
     engines:
       node: '>=12'
     resolution:
-      integrity: sha512-m7zZ5l3RUktayf1lRBV1XMb8HSKsmWTv/LZPqP7UGC1NMzOlc+bbTOPNQ4CP/c1P4cP61VWLb/zBq7a3c0nMaw==
+      integrity: sha512-S3pNOoeKxdpog3jSTzFtJ7OivB/ubxn1MK9a5T7/eYtsdulyL0eqAt/btY0S9QEPCKVNKjnZbYMdV+E4x8eItA==
   /@octokit/app/12.0.7:
     dependencies:
       '@octokit/auth-app': 3.6.1
@@ -248,7 +248,7 @@ packages:
       integrity: sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==
   /@types/node-fetch/2.6.2:
     dependencies:
-      '@types/node': 18.0.0
+      '@types/node': 18.0.3
       form-data: 3.0.1
     dev: false
     resolution:
@@ -257,6 +257,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==
+  /@types/node/18.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==
   /aggregate-error/3.1.0:
     dependencies:
       clean-stack: 2.2.0
@@ -692,7 +696,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  '@notionhq/client': ^1.0.4
+  '@notionhq/client': ^2.0.0
   dotenv: ^16.0.1
   lodash: ^4.17.21
   octokit: ^1.8.0
