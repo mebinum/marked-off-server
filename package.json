@@ -10,12 +10,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": ""
   },
-  "author": "Aman Gupta",
+  "author": "Oyem Ebinum",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "^2.1.1",
+    "@notionhq/client": "^2.2.0",
     "dotenv": "^16.0.1",
     "lodash": "^4.17.21",
-    "octokit": "^2.0.3"
+    "octokit": "^2.0.3",
+    "express": "^4.18.1"
   }
 }
