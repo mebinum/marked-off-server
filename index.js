@@ -2,10 +2,10 @@
 // where your node app starts
 
 // init project
-const koa = require('koa');
-const app = koa();
+// init project
+var express = require('express');
+var app = express();
 const PORT = process.env.PORT || 3000;
-
 
 
 // we've started you off with Express, 
@@ -18,6 +18,11 @@ var dreams = [
   "Wash the dishes"
 ];
 
+app.get("/", function (request, response) {
+  response.sendFile(__dirname + '/views/index.html');
+});
+
+
 app.get("/callback", function (request, response) {
   response.send(dreams);
 });
@@ -29,8 +34,6 @@ app.post("/dreams", function (request, response) {
 });
 
 
-
-
 const server = app.listen(PORT, () => {
-console.log(`Koa is listening to http://localhost:${server.address().port}`);
+    console.log(`Express is listening to http://localhost:${PORT}`);
 });
