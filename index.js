@@ -5,10 +5,12 @@
 // init project
 var express = require('express');
 var app = express();
-app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -20,13 +22,15 @@ var dreams = [
   "Wash the dishes"
 ];
 
+
 app.get("/", function (request, response) {
   response.json({"Hello": "world"});
 });
 
 
 app.post("/callback", function (request, response) {
-  console.log("callback", request.body);
+  console.log("callback", request);
+  
   //response.send(dreams);
   response.sendStatus(200);
 });
