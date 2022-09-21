@@ -1,7 +1,7 @@
 {
-  "name": "github-issue-sync",
+  "name": "signotion",
   "version": "1.0.0",
-  "description": "Sync GitHub issues with Notion.",
+  "description": "signotion allows you to sign contracts in notion.",
   "main": "index.js",
   "engines": {
     "node": "12.x"
@@ -16,7 +16,6 @@
     "@notionhq/client": "^2.2.0",
     "dotenv": "^16.0.1",
     "lodash": "^4.17.21",
-    "octokit": "^2.0.3",
-    "express": "^4.18.1"
+    "koa": "^2.13.4"
   }
 }
