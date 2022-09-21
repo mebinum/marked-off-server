@@ -1,22 +1,21 @@
 // server.js
 // where your node app starts
 
-// init project
-// init project
-var express = require('express');
-require("hellosign-embedded");
-var app = express();
 
+var express = require('express');
+const { Client } = require("@notionhq/client");
 const dotenv = require("dotenv");
+
 
 dotenv.config()
 
+const hellosign = require('hellosign-sdk')({ key: process.env.HELLOSIGN_KEY });
+
+// init project
+var app = express();
+
+
 const PORT = process.env.PORT || 3000;
-
-const helloSign = new HelloSign({
-  clientId: process.env.HELLOSIGN_CLIENTID
-});
-
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 
@@ -52,10 +51,14 @@ app.get("/markoff/:pageId", (request, response) => {
   //generate pdf
   //send pdf to hellosign api
   
-  
-client.open("https://app.hellosign.com/editor/embeddedSign?signature_id=044722cb46ae7151c31cd3559e948417&token=95f1102da3a3f4c4f5ee9521f56c2d32", {
-  testMode: true
-});
+  const opts = {
+    test_mode: 1,
+    clientId: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
+  type: 'request_signature',
+  subject: 'The NDA we talked about',
+  requester_email_address: 'alice@example.com',
+  files: ['NDA.pdf']
+};
   
 });
 
