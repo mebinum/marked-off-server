@@ -5,6 +5,8 @@
 // init project
 var express = require('express');
 var app = express();
+app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
 
@@ -19,12 +21,14 @@ var dreams = [
 ];
 
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+  response.json({"Hello": "world"});
 });
 
 
-app.get("/callback", function (request, response) {
-  response.send(dreams);
+app.post("/callback", function (request, response) {
+  console.log("callback", request.body);
+  //response.send(dreams);
+  response.sendStatus(200);
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
