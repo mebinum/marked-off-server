@@ -1,12 +1,11 @@
 {
-  "name": "signotion",
+  "name": "marked-off",
   "version": "1.0.0",
-  "description": "signotion allows you to sign contracts in notion.",
+  "description": "mark off allows you to sign contracts in notion.",
   "main": "index.js",
   "engines": {
     "node": "12.x"
   },
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -17,6 +16,7 @@
     "@notionhq/client": "^2.2.0",
     "dotenv": "^16.0.1",
     "lodash": "^4.17.21",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "hellosign-embedded": "^2.10.0"
   }
 }
