@@ -53,11 +53,11 @@ app.get("/markoff/:pageId", (request, response) => {
   
   const opts = {
     test_mode: 1,
-    clientId: 'b6b8e7deaf8f0b95c029dca049356d4a2cf9710a',
-  type: 'request_signature',
-  subject: 'The NDA we talked about',
-  requester_email_address: 'alice@example.com',
-  files: ['NDA.pdf']
+    clientId: process.env.HELLOSIGN_CLIENTID,
+    type: 'request_signature',
+    subject: 'The NDA we talked about',
+    requester_email_address: 'alice@example.com',
+    files: ['NDA.pdf']
 };
   
 });
