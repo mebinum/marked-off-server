@@ -57,14 +57,14 @@ app.get("/markoff/:pageId", (request, response) => {
   //send pdf to hellosign api
 
   const signer1 = {
-    emailAddress: "jack@example.com",
-    name: "Jack",
+    emailAddress: "oyem@sheda.ltd",
+    name: "Oyem",
     order: 0,
   }
 
   const signer2 = {
-    emailAddress: "jill@example.com",
-    name: "Jill",
+    emailAddress: "mike@sheda.ltd",
+    name: "Mike",
     order: 1,
   }
 
@@ -86,18 +86,19 @@ app.get("/markoff/:pageId", (request, response) => {
     message:
       "Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
     signers: [signer1, signer2],
-    ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
-    fileUrl: ["https://app.hellosign.com/docs/example_signature_request.pdf"],
-    metadata: {
-      custom_id: 1234,
-      custom_text: "NDA #9",
-    },
+    //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
+    fileUrl: [pdfUrl.url],
+    // metadata: {
+    //   custom_id: 1234,
+    //   custom_text: "NDA #9",
+    // },
     signingOptions,
     fieldOptions,
     testMode: true,
   }
 
-  const result = api.signatureRequestSend(data)
+  const result = hellosign.signatureRequest.send(data);
+  
   result
     .then(response => {
       console.log(response.body)
