@@ -2,10 +2,11 @@
 // where your node app starts
 
 
-var express = require('express');
+const express = require('express');
 const { Client } = require("@notionhq/client");
 const dotenv = require("dotenv");
-
+const assets = require('./assets');
+const { NotionPageToPdf } = require('./notionPageToPdf');
 
 dotenv.config()
 
@@ -14,6 +15,10 @@ const hellosign = require('hellosign-sdk')({ key: process.env.HELLOSIGN_KEY });
 // init project
 var app = express();
 
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static('public'));
+
+app.use("/assets", assets);
 
 const PORT = process.env.PORT || 3000;
 const notion = new Client({ auth: process.env.NOTION_KEY })
