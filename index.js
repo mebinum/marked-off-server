@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 3000
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+//app.use(express.json())
 
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -56,43 +56,56 @@ app.get("/markoff/:pageId", (request, response) => {
   const pdfUrl = NotionPageToPdf.toPdf(pageId)
   //send pdf to hellosign api
 
-  const opts = {
+  const signer1 = {
+    emailAddress: "jack@example.com",
+    name: "Jack",
+    order: 0,
+  }
+
+  const signer2 = {
+    emailAddress: "jill@example.com",
+    name: "Jill",
+    order: 1,
+  }
+
+  const signingOptions = {
+    draw: true,
+    type: true,
+    upload: true,
+    phone: false,
+    defaultType: "draw",
+  }
+
+  const fieldOptions = {
+    dateFormat: "DD - MM - YYYY",
+  }
+
+  const data = {
     title: "NDA with Acme Co.",
     subject: "The NDA we talked about",
     message:
-      "Please sign this NDA and then we can discuss more. Let me know if you\nhave any questions.",
-    signers: [
-      {
-        email_address: "oyem@sheda.ltd",
-        name: "Oyem",
-        order: 0,
-      },
-      {
-        email_address: "mike@sheda.ltd",
-        name: "Jill",
-        order: 1,
-      },
-    ],
-    //cc_email_addresses: ["lawyer@hellosign.com", "lawyer@example.com"],
-    file_url: [
-      pdfUrl,
-    ],
-    // metadata: {
-    //   custom_id: 1234,
-    //   custom_text: "NDA #9",
-    // },
-    signing_options: {
-      draw: true,
-      type: true,
-      upload: true,
-      phone: false,
-      default_type: "draw",
+      "Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+    signers: [signer1, signer2],
+    ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
+    fileUrl: ["https://app.hellosign.com/docs/example_signature_request.pdf"],
+    metadata: {
+      custom_id: 1234,
+      custom_text: "NDA #9",
     },
-    field_options: {
-      date_format: "DD - MM - YYYY",
-    },
-    test_mode: true,
-  };
+    signingOptions,
+    fieldOptions,
+    testMode: true,
+  }
+
+  const result = api.signatureRequestSend(data)
+  result
+    .then(response => {
+      console.log(response.body)
+    })
+    .catch(error => {
+      console.log("Exception when calling HelloSign API:")
+      console.log(error.body)
+    })
 })
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
