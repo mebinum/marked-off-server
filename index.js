@@ -53,8 +53,9 @@ app.post("/callback", function (request, response) {
 app.get("/markoff/:pageId", (request, response) => {
   
   //get pageid
-   
+  const pageId = request.params.pageId;
   //generate pdf
+  const pdfUrl = NotionPageToPdf.toPdf(pageId);
   //send pdf to hellosign api
   
   const opts = {
