@@ -43,11 +43,12 @@ app.get("/", function (request, response) {
 });
 
 
-app.post("/callback", function (request, response) {
+app.post("/hellosign-events", function (request, response) {
   console.log("callback", request);
   
   //response.send(dreams);
-  response.sendStatus(200);
+  response.set('content-Type', 'text/plain');
+  response.status(200).send('Hello API Event Received');
 });
 
 app.get("/markoff/:pageId", (request, response) => {
