@@ -87,6 +87,8 @@ app.post("/markoff/:pageId", (request, response) => {
       "Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
     signers: [signer1, signer2],
     //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
+    // signing_redirect_url: 'http://bondstreet.co.uk',
+    // requesting_redirect_url: 'http://met.police.uk',
     fileUrl: [pdfUrl.url],
     // metadata: {
     //   custom_id: 1234,
@@ -94,12 +96,12 @@ app.post("/markoff/:pageId", (request, response) => {
     // },
     signingOptions,
     fieldOptions,
-    testMode: true,
+    test_mode: 1,
   }
 
   const result = hellosign.signatureRequest.send(data);
   
-  let responseMessage = {
+  const responseMessage = {
     status: 200,
     message: `Successfully Marked Off Notion page ${pageId}`
   }
@@ -109,11 +111,14 @@ app.post("/markoff/:pageId", (request, response) => {
       console.log(response.body)
     })
     .catch(error => {
-      console.log("Exception when calling HelloSign API:")
-      console.log(error.body);
-      status = 500;
+
+      console.error("Error happened",error);
+      responseMessage.status = 500;
+      responseMessage.message = `Exception when calling HelloSign API: ${pageId}\nError\n ${error.message}`;
     }).finally(() => {
-      res.status(status).send('Bad Request')
+    
+      const { status, message } = responseMessage;
+      response.status(status).send(message);
     })
 })
 
