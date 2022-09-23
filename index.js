@@ -89,13 +89,13 @@ app.post("/markoff/:pageId", (request, response) => {
     //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
     // signing_redirect_url: 'http://bondstreet.co.uk',
     // requesting_redirect_url: 'http://met.police.uk',
-    fileUrl: [pdfUrl.url],
+    file_url: [pdfUrl.url],
     // metadata: {
     //   custom_id: 1234,
     //   custom_text: "NDA #9",
     // },
-    signingOptions,
-    fieldOptions,
+    signing_options: signingOptions,
+    field_options: fieldOptions,
     test_mode: 1,
   }
 
