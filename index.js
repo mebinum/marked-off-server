@@ -49,13 +49,13 @@ app.post("/hellosign-events", function (request, response) {
   response.status(200).send("Hello API Event Received")
 })
 
-app.post("/markoff/:pageId", (request, response) => {
+app.post("/markoff/:pageId", async (request, response) => {
   //get pageid
   const pageId = request.params.pageId
   //generate pdf
-  const pdfUrl = NotionPageToPdf.toPdf(pageId)
+  const pdfUrl = await NotionPageToPdf.toPdf(pageId)
   //send pdf to hellosign api
- console.log(pdfUrl.url);
+
   const signer1 = {
     emailAddress: "oyem@sheda.ltd",
     name: "Oyem",
@@ -79,7 +79,9 @@ app.post("/markoff/:pageId", (request, response) => {
   const fieldOptions = {
     dateFormat: "DD - MM - YYYY",
   }
-
+  
+  // signing_redirect_url: "URL of the notion page"
+  
   const data = {
     title: "NDA with Acme Co.",
     subject: "The NDA we talked about",
@@ -89,7 +91,7 @@ app.post("/markoff/:pageId", (request, response) => {
     //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
     // signing_redirect_url: 'http://bondstreet.co.uk',
     // requesting_redirect_url: 'http://met.police.uk',
-    file_url: [pdfUrl.url],
+    file_url: [pdfUrl],
     // metadata: {
     //   custom_id: 1234,
     //   custom_text: "NDA #9",
