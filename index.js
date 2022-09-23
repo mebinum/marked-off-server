@@ -57,13 +57,13 @@ app.post("/markoff/:pageId", async (request, response) => {
   //send pdf to hellosign api
 
   const signer1 = {
-    emailAddress: "oyem@sheda.ltd",
+    email_address: "oyem@sheda.ltd",
     name: "Oyem",
     order: 0,
   }
 
   const signer2 = {
-    emailAddress: "mike@sheda.ltd",
+    email_address: "mike@sheda.ltd",
     name: "Mike",
     order: 1,
   }
@@ -73,11 +73,11 @@ app.post("/markoff/:pageId", async (request, response) => {
     type: true,
     upload: true,
     phone: false,
-    defaultType: "draw",
+    default_type: "draw",
   }
 
   const fieldOptions = {
-    dateFormat: "DD - MM - YYYY",
+    date_format: "DD - MM - YYYY",
   }
   
   // signing_redirect_url: "URL of the notion page"
@@ -98,7 +98,7 @@ app.post("/markoff/:pageId", async (request, response) => {
     // },
     signing_options: signingOptions,
     field_options: fieldOptions,
-    test_mode: 1,
+    test_mode: 0,
   }
 
   const result = hellosign.signatureRequest.send(data);
