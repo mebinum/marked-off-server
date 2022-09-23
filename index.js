@@ -55,7 +55,7 @@ app.post("/markoff/:pageId", (request, response) => {
   //generate pdf
   const pdfUrl = NotionPageToPdf.toPdf(pageId)
   //send pdf to hellosign api
-
+ console.log(pdfUrl.url);
   const signer1 = {
     emailAddress: "oyem@sheda.ltd",
     name: "Oyem",
