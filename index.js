@@ -49,7 +49,7 @@ app.post("/hellosign-events", function (request, response) {
   response.status(200).send("Hello API Event Received")
 })
 
-app.get("/markoff/:pageId", (request, response) => {
+app.post("/markoff/:pageId", (request, response) => {
   //get pageid
   const pageId = request.params.pageId
   //generate pdf
@@ -99,13 +99,21 @@ app.get("/markoff/:pageId", (request, response) => {
 
   const result = hellosign.signatureRequest.send(data);
   
+  let responseMessage = {
+    status: 200,
+    message: `Successfully Marked Off Notion page ${pageId}`
+  }
+  
   result
     .then(response => {
       console.log(response.body)
     })
     .catch(error => {
       console.log("Exception when calling HelloSign API:")
-      console.log(error.body)
+      console.log(error.body);
+      status = 500;
+    }).finally(() => {
+      res.status(status).send('Bad Request')
     })
 })
 
