@@ -22,7 +22,7 @@ const hellosign = require("hellosign-sdk")({ key: process.env.HELLOSIGN_KEY })
 var app = express()
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"))
+app.use(express.static('public'))
 
 app.use("/assets", assets)
 
@@ -61,9 +61,8 @@ app.post("/hellosign-events", function (request, response) {
 app.post("/markoff/:pageId", async (request, response, next) => {
   try {
     //get pageid
-    const pageId = request.params.pageId
-    const requestData = request.body
-    console.log("body", requestData)
+    const pageId = request.params.pageId;
+    const requestData = request.body;
     //generate pdf
     const pdfUrl = await NotionPageToPdf.toPdf(pageId);
     //send pdf to hellosign api
@@ -106,9 +105,12 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     // signing_redirect_url: "URL of the notion page"
     const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
     
+    console.log("fullUrl", fullUrl)
+    
     const opts = {
       title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
       subject: "Please Sign",
+      clientId: process.env.HELLOSIGN_CLIENTID,
       message:requesterMessage,
       signers: [signer1, signer2],
       //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
@@ -121,7 +123,7 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       // },
       signing_options: signingOptions,
       field_options: fieldOptions,
-      test_mode: 0,
+      test_mode: 1,
     }
     
     const signatureRequestData = await hellosign.signatureRequest.createEmbedded(opts);
