@@ -105,7 +105,8 @@ app.post("/markoff/:pageId", async (request, response, next) => {
 
     // signing_redirect_url: "URL of the notion page"
     const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
-    const data = {
+    
+    const opts = {
       title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
       subject: "Please Sign",
       message:requesterMessage,
@@ -113,21 +114,19 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
       // signing_redirect_url: 'http://bondstreet.co.uk',
       // requesting_redirect_url: 'http://met.police.uk',
-      file_url: [pdfUrl],
+      file_url: [fullUrl],
       // metadata: {
       //   custom_id: 1234,
       //   custom_text: "NDA #9",
       // },
       signing_options: signingOptions,
-      fieldOptions: fieldOptions,
+      field_options: fieldOptions,
       test_mode: 0,
     }
     
-    console.log("pdfUrl", pdfUrl);
-    
-    console.log("fullUrl",  fullUrl);
+    const signatureRequestData = await hellosign.signatureRequest.createEmbedded(opts);
    
-    response.json({ signingPdfUrl: fullUrl });
+    response.json({ signingPdfUrl: fullUrl, signatureRequest: signatureRequestData.signature_request });
 //     const result = await hellosign.signatureRequest.send(data)
 
 //     const responseMessage = {
