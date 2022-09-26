@@ -68,7 +68,9 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     const pdfUrl = await NotionPageToPdf.toPdf(pageId);
     //send pdf to hellosign api
     const response = await notionClient.pages.retrieve({ page_id: pageId });
-//        console.log("notion page", response);
+    const pageTitle = response.properties.title.plain_text;
+    
+    console.log("pageTitle", pageTitle);
     const signer1 = {
       email_address: "oyem@sheda.ltd",
       name: "Oyem",
