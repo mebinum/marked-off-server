@@ -23,6 +23,7 @@ const uploadFileToDropbox = (path, filename) => {
 	}, (res) => {
 		  console.log("statusCode: ", res.statusCode);
 	    console.log("headers: ", res.headers);
+	    console.log("res: ", res);
 
 	    res.on('data', function(d) {
 	        process.stdout.write(d);
