@@ -108,7 +108,7 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     console.log("fullUrl", fullUrl)
 
     const opts = {
-      title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
+      // title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
       subject: "Please Sign this document",
       clientId: process.env.HELLOSIGN_CLIENTID,
       message: requesterMessage,
