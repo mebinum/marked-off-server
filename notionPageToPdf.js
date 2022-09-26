@@ -1,5 +1,6 @@
 const findAssetInfo = require('./findAssetInfo.js');
 const { notionClient } = require("./notionClient");
+const { uploadFileToDropbox } = require("./dropbox");
 const Notion2Html = require("@jeufore/notion-2-html").default;
 const htmlToPdf = require('html-pdf-node');
 const dotenv = require("dotenv");
@@ -19,7 +20,9 @@ class NotionPageToPdf {
      
        const file = {content: html};
        const url = `/public/${pageId}.pdf`;
-       const pdf = await htmlToPdf.generatePdf(file, {path: __dirname + `/public/${pageId}.pdf`});
+       const fullPath = `${__dirname}${url}`
+       const pdf = await htmlToPdf.generatePdf(file, {path: fullPath});
+       uploadFileToDropbox(fullPath, `${pageId}.pdf`);
 //        //get notion page
 //        const response = await notionClient.pages.retrieve({ page_id: pageId });
 //        console.log("notion page", response);
