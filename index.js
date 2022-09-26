@@ -45,10 +45,6 @@ var dreams = [
 ]
 
 app.get("/", function (request, response) {
-  // ;(async () => {
-  //   const listUsersResponse = await notionClient.users.list({});
-  //   console.log(listUsersResponse);
-  // })()
   response.json({ Hello: "world" })
 })
 
@@ -71,7 +67,8 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     //generate pdf
     const pdfUrl = await NotionPageToPdf.toPdf(pageId);
     //send pdf to hellosign api
-
+    const response = await notionClient.pages.retrieve({ page_id: pageId });
+//        console.log("notion page", response);
     const signer1 = {
       email_address: "oyem@sheda.ltd",
       name: "Oyem",
@@ -118,7 +115,10 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     }
     
     console.log("pdfUrl", pdfUrl);
-    response.json({ signingPdfUrl: pdfUrl });
+    const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
+    console.log("fullUrl",  fullUrl);
+   
+    response.json({ signingPdfUrl: fullUrl });
 //     const result = await hellosign.signatureRequest.send(data)
 
 //     const responseMessage = {
