@@ -67,19 +67,27 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     //generate pdf
     const pdfUrl = await NotionPageToPdf.toPdf(pageId);
     //send pdf to hellosign api
-    const response = await notionClient.pages.retrieve({ page_id: pageId });
-    const pageTitle = response.properties.title.plain_text;
+    const notionPage = await notionClient.pages.retrieve({ page_id: pageId });
+    const pageTitle = notionPage.properties.title.title[0].plain_text ;
     
     console.log("pageTitle", pageTitle);
+    const {  
+      requesterName,
+      requesterEmail,
+      signerName,
+      signerEmail,
+      requesterMessage
+    } = requestData;
+    
     const signer1 = {
-      email_address: "oyem@sheda.ltd",
-      name: "Oyem",
+      email_address: requesterEmail,
+      name: requesterName,
       order: 0,
     }
 
     const signer2 = {
-      email_address: "mike@sheda.ltd",
-      name: "Mike",
+      email_address: signerEmail,
+      name: signerName,
       order: 1,
     }
 
@@ -96,12 +104,11 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     }
 
     // signing_redirect_url: "URL of the notion page"
-
+    const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
     const data = {
-      title: "NDA with Acme Co.",
-      subject: "The NDA we talked about",
-      message:
-        "Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+      title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
+      subject: "Please Sign",
+      message:requesterMessage,
       signers: [signer1, signer2],
       //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
       // signing_redirect_url: 'http://bondstreet.co.uk',
@@ -117,7 +124,7 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     }
     
     console.log("pdfUrl", pdfUrl);
-    const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
+    
     console.log("fullUrl",  fullUrl);
    
     response.json({ signingPdfUrl: fullUrl });
