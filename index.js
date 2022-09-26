@@ -22,7 +22,7 @@ const hellosign = require("hellosign-sdk")({ key: process.env.HELLOSIGN_KEY })
 var app = express()
 
 // http://expressjs.com/en/starter/static-files.html
-app.use('/public', express.static('public'))
+app.use("/public", express.static("public"))
 
 app.use("/assets", assets)
 
@@ -61,23 +61,23 @@ app.post("/hellosign-events", function (request, response) {
 app.post("/markoff/:pageId", async (request, response, next) => {
   try {
     //get pageid
-    const pageId = request.params.pageId;
-    const requestData = request.body;
+    const pageId = request.params.pageId
+    const requestData = request.body
     //generate pdf
-    const pdfUrl = await NotionPageToPdf.toPdf(pageId);
+    const pdfUrl = await NotionPageToPdf.toPdf(pageId)
     //send pdf to hellosign api
-    const notionPage = await notionClient.pages.retrieve({ page_id: pageId });
-    const pageTitle = notionPage.properties.title.title[0].plain_text ;
-    
-    console.log("pageTitle", pageTitle);
-    const {  
+    const notionPage = await notionClient.pages.retrieve({ page_id: pageId })
+    const pageTitle = notionPage.properties.title.title[0].plain_text
+
+    console.log("pageTitle", pageTitle)
+    const {
       requesterName,
       requesterEmail,
       signerName,
       signerEmail,
-      requesterMessage
-    } = requestData;
-    
+      requesterMessage,
+    } = requestData
+
     const signer1 = {
       email_address: requesterEmail,
       name: requesterName,
@@ -103,15 +103,15 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     }
 
     // signing_redirect_url: "URL of the notion page"
-    const fullUrl = request.protocol + '://' + request.get('host') + pdfUrl;
-    
+    const fullUrl = request.protocol + "s://" + request.get("host") + pdfUrl
+
     console.log("fullUrl", fullUrl)
-    
+
     const opts = {
       title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
-      subject: "Please Sign",
+      subject: "Please Sign this document",
       clientId: process.env.HELLOSIGN_CLIENTID,
-      message:requesterMessage,
+      message: requesterMessage,
       signers: [signer1, signer2],
       //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
       // signing_redirect_url: 'http://bondstreet.co.uk',
@@ -125,18 +125,22 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       field_options: fieldOptions,
       test_mode: 1,
     }
-    
-    const signatureRequestData = await hellosign.signatureRequest.createEmbedded(opts);
-   
-    response.json({ signingPdfUrl: fullUrl, signatureRequest: signatureRequestData.signature_request });
-//     const result = await hellosign.signatureRequest.send(data)
 
-//     const responseMessage = {
-//       status: 200,
-//       message: `Successfully Marked Off Notion page ${pageId}`,
-//     }
+    const signatureRequestData =
+      await hellosign.signatureRequest.createEmbedded(opts)
 
-//     console.log(result.body)
+    response.json({
+      signingPdfUrl: fullUrl,
+      signatureRequest: signatureRequestData.signature_request,
+    })
+    //     const result = await hellosign.signatureRequest.send(data)
+
+    //     const responseMessage = {
+    //       status: 200,
+    //       message: `Successfully Marked Off Notion page ${pageId}`,
+    //     }
+
+    //     console.log(result.body)
   } catch (err) {
     next(err)
   }
