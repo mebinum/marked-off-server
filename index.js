@@ -116,6 +116,8 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       fieldOptions: fieldOptions,
       test_mode: 0,
     }
+    
+    console.log("pdfUrl", pdfUrl);
 
     const result = await hellosign.signatureRequest.send(data)
 
