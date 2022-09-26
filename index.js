@@ -43,10 +43,10 @@ var dreams = [
 ]
 
 app.get("/", function (request, response) {
-  ;(async () => {
-    const listUsersResponse = await notionClient.users.list({});
-    console.log(listUsersResponse);
-  })()
+  // ;(async () => {
+  //   const listUsersResponse = await notionClient.users.list({});
+  //   console.log(listUsersResponse);
+  // })()
   response.json({ Hello: "world" })
 })
 
@@ -114,17 +114,15 @@ app.post("/markoff/:pageId", async (request, response) => {
     test_mode: 0,
   }
 
-  const result = hellosign.signatureRequest.send(data);
+  const result = await hellosign.signatureRequest.send(data);
   
   const responseMessage = {
     status: 200,
     message: `Successfully Marked Off Notion page ${pageId}`
   }
   
-  result
-    .then(response => {
-      console.log(response.body)
-    })
+  onsole.log(response.body)
+
     .catch(error => {
 
       console.error("Error happened",error);

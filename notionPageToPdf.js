@@ -9,13 +9,14 @@ class NotionPageToPdf {
      try {
        console.log("pageId",pageId)
        //get notion page
-       const pageProperty =  await sdk.retrieveAPageProperty({page_id: 'page_id', property_id: 'property_id', 'notion-version': '2022-06-28'});
+       const response = await notionClient.pages.retrieve({ page_id: pageId });
        
       const assetInfo = findAssetInfo('contract.pdf');
       console.log("assetInfo", assetInfo);
        return assetInfo.url;
     } catch (err) {
       console.log(err);
+      throw err
     }
   }
 }
