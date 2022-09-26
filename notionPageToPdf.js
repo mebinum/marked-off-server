@@ -10,6 +10,7 @@ class NotionPageToPdf {
        console.log("pageId",pageId)
        //get notion page
        const response = await notionClient.pages.retrieve({ page_id: pageId });
+       console.log("notion page", response);
        
       const assetInfo = findAssetInfo('contract.pdf');
       console.log("assetInfo", assetInfo);
