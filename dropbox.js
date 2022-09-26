@@ -12,7 +12,7 @@ const uploadFileToDropbox = (path, filename) => {
 		headers: {
 			'Authorization': `Bearer ${process.env.DROPBOX_TOKEN}`,
 			'Dropbox-API-Arg': JSON.stringify({
-				'path': `/contracts/${filename}`,
+				'path': `/Upload/${filename}`,
 				'mode': 'overwrite',
 				'autorename': true, 
 				'mute': false,
