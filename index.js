@@ -58,6 +58,8 @@ app.post("/hellosign-events", function (request, response) {
 app.post("/markoff/:pageId", async (request, response) => {
   //get pageid
   const pageId = request.params.pageId
+  const requestData = request.body;
+  console.log("body", requestData);
   //generate pdf
   const pdfUrl = await NotionPageToPdf.toPdf(pageId)
   //send pdf to hellosign api
