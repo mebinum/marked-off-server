@@ -112,6 +112,8 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       subject: "Please Sign this document",
       clientId: process.env.HELLOSIGN_CLIENTID,
       message: requesterMessage,
+      requester_email_address: requesterEmail,
+      allow_ccs: true,
       signers: [signer1, signer2],
       //ccEmailAddresses: ["lawyer@hellosign.com", "lawyer@example.com"],
       // signing_redirect_url: 'http://bondstreet.co.uk',
@@ -123,11 +125,14 @@ app.post("/markoff/:pageId", async (request, response, next) => {
       // },
       signing_options: signingOptions,
       field_options: fieldOptions,
+      is_for_embedded_signing: 1,
+      show_preview: true,
       test_mode: 1,
     }
 
-    const signatureRequestData =
-      await hellosign.signatureRequest.createEmbedded(opts)
+    const signatureRequestData = await hellosign.unclaimedDraft.createEmbedded(
+      opts
+    )
 
     response.json({
       signingPdfUrl: fullUrl,
