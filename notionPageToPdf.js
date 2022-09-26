@@ -1,6 +1,7 @@
 const findAssetInfo = require('./findAssetInfo.js');
 const { notionClient } = require("./notionClient");
 const Notion2Html = require("@jeufore/notion-2-html").default;
+const htmlToPdf = require('html-pdf-node');
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -19,6 +20,8 @@ class NotionPageToPdf {
        const html =  await notion.convert(pageId);
        console.log("notion html", html);
        
+       const file = {content: html};
+       const pdf = await htmlToPdf.generatePdf(file, {path: __""});
        //get notion page
        const response = await notionClient.pages.retrieve({ page_id: pageId });
        console.log("notion page", response);
