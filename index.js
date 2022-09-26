@@ -109,7 +109,7 @@ app.post("/markoff/:pageId", async (request, response, next) => {
 
     const opts = {
       // title: `Requesting signature for ${pageTitle ? pageTitle : "contract"}`,
-      subject: "Please Sign this document",
+      subject: `Please Sign document ${pageTitle ? pageTitle : "contract"}`,
       clientId: process.env.HELLOSIGN_CLIENTID,
       message: requesterMessage,
       requester_email_address: requesterEmail,
@@ -136,7 +136,7 @@ app.post("/markoff/:pageId", async (request, response, next) => {
 
     response.json({
       signingPdfUrl: fullUrl,
-      signatureRequest: signatureRequestData.signature_request,
+      signatureRequest: signatureRequestData,
     })
     //     const result = await hellosign.signatureRequest.send(data)
 
