@@ -118,15 +118,15 @@ app.post("/markoff/:pageId", async (request, response, next) => {
     }
     
     console.log("pdfUrl", pdfUrl);
+    response.json({ signingPdfUrl: pdfUrl });
+//     const result = await hellosign.signatureRequest.send(data)
 
-    const result = await hellosign.signatureRequest.send(data)
+//     const responseMessage = {
+//       status: 200,
+//       message: `Successfully Marked Off Notion page ${pageId}`,
+//     }
 
-    const responseMessage = {
-      status: 200,
-      message: `Successfully Marked Off Notion page ${pageId}`,
-    }
-
-    console.log(result.body)
+//     console.log(result.body)
   } catch (err) {
     next(err)
   }
