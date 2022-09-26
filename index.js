@@ -7,6 +7,12 @@ const dotenv = require("dotenv")
 const assets = require("./assets")
 const { NotionPageToPdf } = require("./notionPageToPdf")
 const { notionClient } = require("./notionClient");
+const {
+  logErrors,
+  clientErrorHandler,
+  errorHandler,
+  allowCors
+} = require("./middleware");
 
 dotenv.config()
 
@@ -25,12 +31,11 @@ const notion = new Client({ auth: process.env.NOTION_KEY })
 
 app.use(express.urlencoded({ extended: true }));
 //allow cors
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-//app.use(express.json())
+app.use(allowCors);
+app.use(express.json());
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -60,13 +65,13 @@ app.post("/hellosign-events", function (request, response) {
   response.status(200).send("Hello API Event Received")
 })
 
-app.post("/markoff/:pageId", async (request, response) => {
+app.post("/markoff/:pageId", async (request, response, next) => {
   //get pageid
   const pageId = request.params.pageId
   const requestData = request.body;
   console.log("body", requestData);
   //generate pdf
-  const pdfUrl = await NotionPageToPdf.toPdf(pageId)
+  const pdfUrl = await NotionPageToPdf.toPdf(pageId).catch(next)
   //send pdf to hellosign api
 
   const signer1 = {
@@ -110,7 +115,7 @@ app.post("/markoff/:pageId", async (request, response) => {
     //   custom_text: "NDA #9",
     // },
     signing_options: signingOptions,
-    field_options: fieldOptions,
+    fieldOptions: fieldOptions,
     test_mode: 0,
   }
 
@@ -121,18 +126,7 @@ app.post("/markoff/:pageId", async (request, response) => {
     message: `Successfully Marked Off Notion page ${pageId}`
   }
   
-  onsole.log(response.body)
-
-    .catch(error => {
-
-      console.error("Error happened",error);
-      responseMessage.status = 500;
-      responseMessage.message = `Exception when calling HelloSign API: ${pageId}\nError\n ${error.message}`;
-    }).finally(() => {
-    
-      const { status, message } = responseMessage;
-      response.status(status).send(message);
-    })
+  console.log(result.body);
 })
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
