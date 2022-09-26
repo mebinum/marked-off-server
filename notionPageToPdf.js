@@ -1,6 +1,6 @@
 const findAssetInfo = require('./findAssetInfo.js');
 
-const sdk = require('api')('@notionapi/v1#4rkc1lkz7dw9us');
+const { notionClient } = require("./notionClient");
 
 
 class NotionPageToPdf {

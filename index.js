@@ -6,6 +6,7 @@ const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
 const assets = require("./assets")
 const { NotionPageToPdf } = require("./notionPageToPdf")
+const { notionClient } = require("./notionClient");
 
 dotenv.config()
 
@@ -42,6 +43,10 @@ var dreams = [
 ]
 
 app.get("/", function (request, response) {
+  ;(async () => {
+    const listUsersResponse = await notionClient.users.list({});
+    console.log(listUsersResponse);
+  })()
   response.json({ Hello: "world" })
 })
 
