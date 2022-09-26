@@ -1,6 +1,6 @@
 const findAssetInfo = require('./findAssetInfo.js');
 const { notionClient } = require("./notionClient");
-var notionhtml = require("@jeufore/notion-2-html");
+const Notion2Html = require("@jeufore/notion-2-html").default;
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -10,9 +10,8 @@ class NotionPageToPdf {
   
   static async toPdf(pageId) {
      try {
-       const {Notion2Html} = notionhtml.default;
        console.log("pageId",pageId);
-       console.log("notion",notionhtml.default);
+
        console.log("Notion2Html",Notion2Html);
        
        const notion = new Notion2Html(process.env.NOTION_KEY);
