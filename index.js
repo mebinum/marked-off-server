@@ -22,7 +22,7 @@ const hellosign = require("hellosign-sdk")({ key: process.env.HELLOSIGN_KEY })
 var app = express()
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'))
+app.use('/public', express.static('public'))
 
 app.use("/assets", assets)
 
